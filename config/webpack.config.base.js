@@ -70,7 +70,7 @@ module.exports = (isDev = false) => {
     ],
     output: {
       chunkFilename: "[name].[chunkhash:4].js",
-      filename: '[name].[chunkhash]'.js,
+      filename: '[name].[chunkhash].js',
       path: BUILD_DIR,
     },
     resolve: {
