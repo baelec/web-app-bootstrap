@@ -4,9 +4,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlPlugin = require('html-webpack-plugin');
 const ForkTsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
-const CleanPlugin = require('clean-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-//const HardSourcePlugin = require('hard-source-webpack-plugin');
 const HappyPackPlugin = require('happypack');
 
 const happyThreadPool = HappyPackPlugin.ThreadPool({size: 5});
@@ -17,16 +16,16 @@ const BUILD_DIR = path.resolve(ROOT_DIR, 'build/webpack');
 
 module.exports = (isDev = false) => {
   const plugins = [
-    new CleanPlugin(BUILD_DIR, {root: ROOT_DIR}),
+    new CleanPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    /*new HardSourcePlugin({}),
+    /*new HardSourcePlugin({}),*/
     createHappyPlugin('ts', [{
       loader: 'ts-loader',
       options: {
         transpileOnly: true,
         happyPackMode: true,
       },
-    }]),*/
+    }]),
     new HtmlPlugin({
       inject: true,
       template: path.resolve(ROOT_DIR, 'public/index.html'),
@@ -37,6 +36,7 @@ module.exports = (isDev = false) => {
       tslint: false,
       checkSyntacticErrors: true,
     }),
+      createHappyPlugin('ts', [ 'ts-loader'])
   ];
 
   const HAPPY_CSS_LOADER = 'happypack/loader?id=css';
