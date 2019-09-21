@@ -7,6 +7,7 @@ const ForkTsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HappyPackPlugin = require('happypack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const happyThreadPool = HappyPackPlugin.ThreadPool({size: 5});
 
@@ -36,7 +37,8 @@ module.exports = (isDev = false) => {
       tslint: false,
       checkSyntacticErrors: true,
     }),
-      createHappyPlugin('ts', [ 'ts-loader'])
+      createHappyPlugin('ts', [ 'ts-loader']),
+    new BundleAnalyzerPlugin(),
   ];
 
   const HAPPY_CSS_LOADER = 'happypack/loader?id=css';
